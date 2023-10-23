@@ -22,7 +22,9 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/tutorial.routes.js")(app);
+require("./app/routes/producto.routes.js")(app);
 require("./app/routes/user.routes.js")(app);
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -1,29 +1,26 @@
 const sql = require("./db.js");
 
 // constructor
-const User = function(user) {
-  this.nombre = user.nombre;
-  this.edad = user.edad;
-  this.peso = user.peso;
-  this.perfil = user.perfil;
-  this.membresia = user.membresia;
+const Producto = function(producto) {
+  this.nombre = producto.nombre;
+  this.precio = producto.precio;
 };
 
-User.create = (newUser, result) => {
-  sql.query("INSERT INTO users SET ?", newUser, (err, res) => {
+Producto.create = (newProducto, result) => {
+  sql.query("INSERT INTO productos SET ?", newProducto, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
 
-    console.log("created user: ", { id: res.insertId, ...newUser });
-    result(null, { id: res.insertId, ...newUser });
+    console.log("created producto: ", { id: res.insertId, ...newProducto });
+    result(null, { id: res.insertId, ...newProducto });
   });
 };
 
-User.findById = (id, result) => {
-  sql.query(`SELECT * FROM users WHERE id = ${id}`, (err, res) => {
+Producto.findById = (id, result) => {
+  sql.query(`SELECT * FROM productos WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -31,7 +28,7 @@ User.findById = (id, result) => {
     }
 
     if (res.length) {
-      console.log("found user: ", res[0]);
+      console.log("found producto: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -41,8 +38,8 @@ User.findById = (id, result) => {
   });
 };
 
-User.getAll = (nombre, result) => {
-  let query = "SELECT * FROM users";
+Producto.getAll = (nombre, result) => {
+  let query = "SELECT * FROM productos";
 
   if (nombre) {
     query += ` WHERE nombre LIKE '%${nombre}%'`;
@@ -55,14 +52,14 @@ User.getAll = (nombre, result) => {
       return;
     }
 
-    console.log("users: ", res);
+    console.log("productos: ", res);
     result(null, res);
   });
 };
 
-User.updateById = (id, user, result) => {
+Producto.updateById = (id, producto, result) => {
   sql.query(
-    "UPDATE users SET nombre = ?, edad = ?, peso = ?, perfil = ?, membresia = ? WHERE id = ?",
+    "UPDATE productos SET nombre = ?, edad = ?, peso = ?, perfil = ?, membresia = ? WHERE id = ?",
     [tutorial.title, tutorial.description, tutorial.published, id],
     (err, res) => {
       if (err) {
@@ -83,8 +80,8 @@ User.updateById = (id, user, result) => {
   );
 };
 
-User.remove = (id, result) => {
-  sql.query("DELETE FROM users WHERE id = ?", id, (err, res) => {
+Producto.remove = (id, result) => {
+  sql.query("DELETE FROM productos WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -97,22 +94,22 @@ User.remove = (id, result) => {
       return;
     }
 
-    console.log("deleted user with id: ", id);
+    console.log("deleted producto with id: ", id);
     result(null, res);
   });
 };
 
-User.removeAll = result => {
-  sql.query("DELETE FROM users", (err, res) => {
+Producto.removeAll = result => {
+  sql.query("DELETE FROM productos", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    console.log(`deleted ${res.affectedRows} users`);
+    console.log(`deleted ${res.affectedRows} productos`);
     result(null, res);
   });
 };
 
-module.exports = User;
+module.exports = Producto;
