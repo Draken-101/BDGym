@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 
 require("./app/routes/tutorial.routes.js")(app);
 require("./app/routes/producto.routes.js")(app);
+require("./app/routes/empleado.routes.js")(app);
 require("./app/routes/user.routes.js")(app);
 
 
